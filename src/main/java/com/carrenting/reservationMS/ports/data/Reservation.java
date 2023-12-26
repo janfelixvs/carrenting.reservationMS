@@ -9,6 +9,10 @@ import jakarta.persistence.Id;
 
 public class Reservation {
 
+    public Long getId() {
+        return id;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -12,13 +12,12 @@ public class ReservationService implements ReservationManager {
 
 
     @Override
-
     public void addReservation(Reservation reservation) {
-        reservationRepository.addReservation();
+        reservationRepository.save(reservation);
     }
 
     @Override
     public void deleteReservation(Reservation reservation) {
-
+        reservationRepository.deleteById(reservation.getId());
     }
 }
