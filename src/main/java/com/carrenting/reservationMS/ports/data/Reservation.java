@@ -1,38 +1,39 @@
 package com.carrenting.reservationMS.ports.data;
 
 import java.util.Date;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-
+@Setter
+@Getter
+@Entity
 public class Reservation {
-
-    public Long getId() {
-        return id;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long reservationID;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
 
+    private int customerID;
+    private int carID;
 
-    Reservation(Date startDate, Date endDate){
-        this.startDate=startDate;
-        this.endDate=endDate;
+
+    @SuppressWarnings("unused")
+    public Reservation(Date startDate, Date endDate, int customerID, int carID) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.customerID = customerID;
+        this.carID = carID;
     }
 
-    public Date getStartDate(){
-        return startDate;
+    @SuppressWarnings("unused")
+    public Reservation() {
     }
-
-    public Date getEndDate(){
-        return endDate;
-    }
-
 
 }

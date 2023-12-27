@@ -3,21 +3,46 @@ package com.carrenting.reservationMS.service;
 import com.carrenting.reservationMS.ports.data.Reservation;
 import com.carrenting.reservationMS.ports.in.ReservationManager;
 import com.carrenting.reservationMS.ports.out.ReservationRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
+
+
+@Service
 public class ReservationService implements ReservationManager {
 
+    private final ReservationRepository reservationRepository;
+
     @Autowired
-    private ReservationRepository reservationRepository;
-
-
-    @Override
-    public void addReservation(Reservation reservation) {
-        reservationRepository.save(reservation);
+    public ReservationService(ReservationRepository reservationRepository) {
+        this.reservationRepository = reservationRepository;
     }
 
     @Override
-    public void deleteReservation(Reservation reservation) {
-        reservationRepository.deleteById(reservation.getId());
+    public Reservation addReservation(Reservation reservation) {
+        return reservationRepository.save(reservation);
+    }
+
+    @Override
+    public void deleteReservation(Long reservationId) {
+        if (reservationRepository.existsById(reservationId)) {
+            reservationRepository.deleteById(reservationId);
+        } else {
+            throw new EntityNotFoundException("Reservation with id " + reservationId + " not found.");
+        }
+    }
+
+    @Override
+    public List<Reservation> getAllReservations() {
+        return reservationRepository.findAll();
+    }
+
+    @Override
+    public List<Reservation> getReservationsForVehicleInTimeframe(int carID, Date startDate, Date endDate) {
+        return reservationRepository.findAllByCarIDAndStartDateGreaterThanEqualAndEndDateLessThanEqual(carID, startDate, endDate);
     }
 }
+
