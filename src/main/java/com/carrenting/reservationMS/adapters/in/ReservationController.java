@@ -17,18 +17,22 @@ public class ReservationController {
         this.reservationManager = reservationManager;
     }
 
+    //POST: http://localhost:8083/api/reservation
+    // {"customerId": 1, "carId": 1, "startDate": "2024-07-01T10:00:00", "endDate": "2024-07-03T15:00:00" }
     @PostMapping
     public ResponseEntity<Reservation> addReservation(@RequestBody Reservation reservation) {
         Reservation newReservation = reservationManager.addReservation(reservation);
         return ResponseEntity.ok(newReservation);
     }
 
+    //DELETE: http://localhost:8083/api/reservation/11
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
         reservationManager.deleteReservation(id);
         return ResponseEntity.ok().build();
     }
 
+    //GET: http://localhost:8083/api/reservation
     @GetMapping
     public ResponseEntity<List<Reservation>> getAllReservations() {
         List<Reservation> reservations = reservationManager.getAllReservations();
@@ -36,7 +40,7 @@ public class ReservationController {
     }
 
 
-
+    //GET: http://localhost:8083/api/reservation/vehicle?carID=3
     @GetMapping("/vehicle")
     public ResponseEntity<List<Reservation>> getReservationsForVehicle(@RequestParam int carID) {
         List<Reservation> reservations = reservationManager.getReservationsForVehicle(carID);
