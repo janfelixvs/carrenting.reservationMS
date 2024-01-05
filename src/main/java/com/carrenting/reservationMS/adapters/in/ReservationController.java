@@ -2,14 +2,9 @@ package com.carrenting.reservationMS.adapters.in;
 
 import com.carrenting.reservationMS.ports.data.Reservation;
 import com.carrenting.reservationMS.ports.in.ReservationManager;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @RestController
