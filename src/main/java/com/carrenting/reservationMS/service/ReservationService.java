@@ -5,6 +5,7 @@ import com.carrenting.reservationMS.ports.in.ReservationManager;
 import com.carrenting.reservationMS.ports.out.ReservationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -41,8 +42,11 @@ public class ReservationService implements ReservationManager {
     }
 
     @Override
-    public List<Reservation> getReservationsForVehicleInTimeframe(int carID, Date startDate, Date endDate) {
-        return reservationRepository.findAllByCarIDAndStartDateGreaterThanEqualAndEndDateLessThanEqual(carID, startDate, endDate);
+    public List<Reservation> getReservationsForVehicle(@Param("carID") int carID) {
+        return reservationRepository.findByCarID(carID);
+
     }
+
+
 }
 

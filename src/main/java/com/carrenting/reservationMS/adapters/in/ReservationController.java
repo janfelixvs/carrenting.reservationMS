@@ -40,21 +40,16 @@ public class ReservationController {
         return ResponseEntity.ok(reservations);
     }
 
-    @GetMapping("/vehicle/{carId}")
-    public ResponseEntity<List<Reservation>> getReservationsForVehicle(
-            @PathVariable int carId,
-            @RequestParam String startDateStr,
-            @RequestParam String endDateStr) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        try {
-            Date startDate = dateFormat.parse(startDateStr);
-            Date endDate = dateFormat.parse(endDateStr);
-            List<Reservation> reservations = reservationManager.getReservationsForVehicleInTimeframe(carId, startDate, endDate);
-            return ResponseEntity.ok(reservations);
-        } catch (ParseException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
+
+
+    @GetMapping("/vehicle")
+    public ResponseEntity<List<Reservation>> getReservationsForVehicle(@RequestParam int carID) {
+        List<Reservation> reservations = reservationManager.getReservationsForVehicle(carID);
+        return ResponseEntity.ok(reservations);
     }
+
+
+
 
 
 }

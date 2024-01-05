@@ -12,5 +12,5 @@ public interface ReservationManager {
 
     List<Reservation> getAllReservations();
 
-    List<Reservation> getReservationsForVehicleInTimeframe(int carID, Date startDate, Date endDate);
+    List<Reservation> getReservationsForVehicle(int carID);
 }
