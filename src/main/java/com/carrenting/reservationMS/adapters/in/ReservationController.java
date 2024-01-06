@@ -4,6 +4,7 @@ import com.carrenting.reservationMS.ports.data.Reservation;
 import com.carrenting.reservationMS.ports.in.ReservationManager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.carrenting.reservationMS.dto.CarDto;
 
 import java.util.List;
 
@@ -37,6 +38,12 @@ public class ReservationController {
     public ResponseEntity<List<Reservation>> getAllReservations() {
         List<Reservation> reservations = reservationManager.getAllReservations();
         return ResponseEntity.ok(reservations);
+    }
+
+    @GetMapping("/cars")
+    public ResponseEntity<List<CarDto>> getAllCars() {
+        List<CarDto> cars = reservationManager.getAllCars();
+        return ResponseEntity.ok(cars);
     }
 
 

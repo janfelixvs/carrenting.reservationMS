@@ -1,5 +1,8 @@
 package com.carrenting.reservationMS.service;
 
+import com.carrenting.reservationMS.dto.CarDto;
+import com.carrenting.reservationMS.dto.MaintenanceDto;
+import com.carrenting.reservationMS.feign.MaintenanceClient;
 import com.carrenting.reservationMS.ports.data.Reservation;
 import com.carrenting.reservationMS.ports.in.ReservationManager;
 import com.carrenting.reservationMS.ports.out.ReservationRepository;
@@ -8,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,6 +19,7 @@ import java.util.List;
 public class ReservationService implements ReservationManager {
 
     private final ReservationRepository reservationRepository;
+    private final MaintenanceClient maintenanceClient;
 
     @Autowired
     public ReservationService(ReservationRepository reservationRepository) {
@@ -44,6 +49,15 @@ public class ReservationService implements ReservationManager {
     public List<Reservation> getReservationsForVehicle(@Param("carID") int carID) {
         return reservationRepository.findByCarID(carID);
 
+    }
+
+    @Override
+    public List<CarDto> getAllCars() {
+        return carClient.getAllCars();
+    }
+
+    public List<CarDto> getAvailableVehicles(){
+        List<MaintenanceDto> listMaintenance =
     }
 
 
