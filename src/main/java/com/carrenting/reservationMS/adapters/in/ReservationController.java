@@ -40,6 +40,7 @@ public class ReservationController {
         return ResponseEntity.ok(reservations);
     }
 
+    // GET: http://localhost:8083/api/reservation/cars
     @GetMapping("/cars")
     public ResponseEntity<List<CarDto>> getAllCars() {
         List<CarDto> cars = reservationManager.getAllCars();
@@ -55,7 +56,10 @@ public class ReservationController {
     }
 
 
-
-
+    @GetMapping("/availableVehicle")
+    public ResponseEntity<List<CarDto>> getAvailableVehicle() {
+        List<CarDto> carDtoList = reservationManager.getAvailableVehicles();
+        return ResponseEntity.ok(carDtoList);
+    }
 
 }

@@ -16,4 +16,6 @@ public interface ReservationManager {
     List<Reservation> getReservationsForVehicle(int carID);
 
     List<CarDto> getAllCars();
+
+    List<CarDto> getAvailableVehicles();
 }

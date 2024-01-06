@@ -2,6 +2,7 @@ package com.carrenting.reservationMS.service;
 
 import com.carrenting.reservationMS.dto.CarDto;
 import com.carrenting.reservationMS.dto.MaintenanceDto;
+import com.carrenting.reservationMS.feign.CarClient;
 import com.carrenting.reservationMS.feign.MaintenanceClient;
 import com.carrenting.reservationMS.ports.data.Reservation;
 import com.carrenting.reservationMS.ports.in.ReservationManager;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -20,10 +23,16 @@ public class ReservationService implements ReservationManager {
 
     private final ReservationRepository reservationRepository;
     private final MaintenanceClient maintenanceClient;
+    private final CarClient carClient;
+
 
     @Autowired
-    public ReservationService(ReservationRepository reservationRepository) {
+    public ReservationService(ReservationRepository reservationRepository,
+                              CarClient carClient,
+                              MaintenanceClient maintenanceClient) {
         this.reservationRepository = reservationRepository;
+        this.carClient = carClient;
+        this.maintenanceClient = maintenanceClient;
     }
 
     @Override
@@ -56,10 +65,33 @@ public class ReservationService implements ReservationManager {
         return carClient.getAllCars();
     }
 
+    /*
+    public List<CarDto> getAvailableVehicles() {
+        List<CarDto> allCars = carClient.getAllCars();
+        List<MaintenanceDto> carsInRepair = maintenanceClient.getAllMaintenances();
+        List<CarDto> availableCars = allCars.stream()
+                                .filter(car -> !carsInRepair.contains(car))
+                                .collect(Collectors.toList());
+         return availableCars;
+    }*/
+
     public List<CarDto> getAvailableVehicles(){
-        List<MaintenanceDto> listMaintenance =
+        boolean test;
+        List<MaintenanceDto> maintenanceDtosList = maintenanceClient.getAllMaintenances();
+        List<CarDto> carDtoList = carClient.getAllCars();
+        List <CarDto> finalList = new ArrayList<CarDto>();
+        for(CarDto i : carDtoList){
+            test = false;
+            int j = i.getCarID();
+            for(MaintenanceDto maintenanceDto : maintenanceDtosList){
+                if(j==maintenanceDto.getCarID())
+                    test=true;
+            }
+            if (!test)
+                finalList.add(i);
+
+        }
+        return finalList;
     }
 
-
 }
-
