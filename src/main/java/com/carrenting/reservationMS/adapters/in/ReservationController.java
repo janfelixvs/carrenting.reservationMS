@@ -56,6 +56,7 @@ public class ReservationController {
     }
 
 
+    //GET: http://localhost:8083/api/reservation/availableVehicle
     @GetMapping("/availableVehicle")
     public ResponseEntity<List<CarDto>> getAvailableVehicle() {
         List<CarDto> carDtoList = reservationManager.getAvailableVehicles();

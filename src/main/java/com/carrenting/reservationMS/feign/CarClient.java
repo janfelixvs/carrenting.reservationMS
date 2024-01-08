@@ -10,6 +10,6 @@ import java.util.List;
 public interface CarClient {
 
     //Alle Fahrzeuge anzeigen
-    @GetMapping("/api/cars")
+    @GetMapping("/api/car")
     List<CarDto> getAllCars();
 }
