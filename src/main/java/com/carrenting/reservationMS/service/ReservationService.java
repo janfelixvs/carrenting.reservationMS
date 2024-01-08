@@ -65,17 +65,30 @@ public class ReservationService implements ReservationManager {
         return carClient.getAllCars();
     }
 
-    /*
     public List<CarDto> getAvailableVehicles() {
         List<CarDto> allCars = carClient.getAllCars();
         List<MaintenanceDto> carsInRepair = maintenanceClient.getAllMaintenances();
-        List<CarDto> availableCars = allCars.stream()
-                                .filter(car -> !carsInRepair.contains(car))
-                                .collect(Collectors.toList());
-         return availableCars;
-    }*/
+        List<Reservation> allReservations = getAllReservations();
 
-    public List<CarDto> getAvailableVehicles(){
+        Set<Integer> carsInMaintenance = carsInRepair.stream()
+                .map(MaintenanceDto::getCarID)
+                .collect(Collectors.toSet());
+
+        Set<Integer> reservedCarIds = allReservations.stream()
+                .map(Reservation::getCarID)
+                .collect(Collectors.toSet());
+
+        List<CarDto> availableCars = allCars.stream()
+                .filter(car -> !carsInMaintenance.contains(car.getCarID()))
+                .filter(car -> !reservedCarIds.contains(car.getCarID()))
+                .collect(Collectors.toList());
+
+        return availableCars;
+    }
+
+
+
+/*    public List<CarDto> getAvailableVehicles(){
         boolean test;
         List<MaintenanceDto> maintenanceDtosList = maintenanceClient.getAllMaintenances();
         List<CarDto> carDtoList = carClient.getAllCars();
@@ -92,6 +105,6 @@ public class ReservationService implements ReservationManager {
 
         }
         return finalList;
-    }
+    }*/
 
 }
