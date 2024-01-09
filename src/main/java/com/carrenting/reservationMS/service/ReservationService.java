@@ -51,7 +51,8 @@ public class ReservationService implements ReservationManager {
 
     @Override
     public List<Reservation> getAllReservations() {
-        return reservationRepository.findAll();
+        List<Reservation> reservationList=  reservationRepository.findAll();
+        return reservationList;
     }
 
     @Override

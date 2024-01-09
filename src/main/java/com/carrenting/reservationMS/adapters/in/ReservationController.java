@@ -40,6 +40,7 @@ public class ReservationController {
         return ResponseEntity.ok(reservations);
     }
 
+<<<<<<< Updated upstream
     @GetMapping("/user/{userID}")
     public ResponseEntity<List<Reservation>> getAllReservationsByUserID(@PathVariable int userID) {
         List<Reservation> reservations = reservationManager.getAllReservationsByUserID(userID);
@@ -50,6 +51,14 @@ public class ReservationController {
     }
 
 
+=======
+    @GetMapping
+    public ResponseEntity<List<Reservation>> getAllReservationsByUserID(Int customerID) {
+        List<Reservation> reservations = reservationManager.getAllReservations();
+        return ResponseEntity.ok(reservations);
+    }
+
+>>>>>>> Stashed changes
     // GET: http://localhost:8083/api/reservation/cars
     @GetMapping("/cars")
     public ResponseEntity<List<CarDto>> getAllCars() {
