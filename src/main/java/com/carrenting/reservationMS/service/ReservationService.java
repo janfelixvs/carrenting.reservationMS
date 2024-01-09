@@ -55,6 +55,15 @@ public class ReservationService implements ReservationManager {
     }
 
     @Override
+    public List<Reservation> getAllReservationsByUserID(@Param("customerID") int userID) {
+        List<Reservation> reservationList = reservationRepository.findAll();
+        return reservationList.stream()
+                .filter(reservation -> reservation.getCustomerID() == userID)
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
     public List<Reservation> getReservationsForVehicle(@Param("carID") int carID) {
         return reservationRepository.findByCarID(carID);
 
@@ -65,30 +74,17 @@ public class ReservationService implements ReservationManager {
         return carClient.getAllCars();
     }
 
+    /*
     public List<CarDto> getAvailableVehicles() {
         List<CarDto> allCars = carClient.getAllCars();
         List<MaintenanceDto> carsInRepair = maintenanceClient.getAllMaintenances();
-        List<Reservation> allReservations = getAllReservations();
-
-        Set<Integer> carsInMaintenance = carsInRepair.stream()
-                .map(MaintenanceDto::getCarID)
-                .collect(Collectors.toSet());
-
-        Set<Integer> reservedCarIds = allReservations.stream()
-                .map(Reservation::getCarID)
-                .collect(Collectors.toSet());
-
         List<CarDto> availableCars = allCars.stream()
-                .filter(car -> !carsInMaintenance.contains(car.getCarID()))
-                .filter(car -> !reservedCarIds.contains(car.getCarID()))
-                .collect(Collectors.toList());
+                                .filter(car -> !carsInRepair.contains(car))
+                                .collect(Collectors.toList());
+         return availableCars;
+    }*/
 
-        return availableCars;
-    }
-
-
-
-/*    public List<CarDto> getAvailableVehicles(){
+    public List<CarDto> getAvailableVehicles(){
         boolean test;
         List<MaintenanceDto> maintenanceDtosList = maintenanceClient.getAllMaintenances();
         List<CarDto> carDtoList = carClient.getAllCars();
@@ -105,6 +101,6 @@ public class ReservationService implements ReservationManager {
 
         }
         return finalList;
-    }*/
+    }
 
 }

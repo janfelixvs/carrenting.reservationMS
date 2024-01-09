@@ -13,6 +13,8 @@ public interface ReservationManager {
 
     List<Reservation> getAllReservations();
 
+    List<Reservation> getAllReservationsByUserID(int userID);
+
     List<Reservation> getReservationsForVehicle(int carID);
 
     List<CarDto> getAllCars();
