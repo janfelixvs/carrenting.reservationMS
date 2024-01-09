@@ -40,6 +40,8 @@ public class ReservationController {
         return ResponseEntity.ok(reservations);
     }
 
+
+    //http://localhost:8083/api/reservation/user/1
     @GetMapping("/user/{userID}")
     public ResponseEntity<List<Reservation>> getAllReservationsByUserID(@PathVariable int userID) {
         List<Reservation> reservations = reservationManager.getAllReservationsByUserID(userID);
